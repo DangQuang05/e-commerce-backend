@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class BookController {
     private final BookService bookService;
 
@@ -42,5 +43,10 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Book> deactivate(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(bookService.deactivate(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Book>> search(@RequestParam(name = "title") String title) {
+        return ResponseEntity.ok(bookService.search(title));
     }
 }

@@ -64,4 +64,8 @@ public class BookService {
         }
         return null;
     }
+
+    public List<Book> search(String title) {
+        return bookRepository.findByTitleContainingIgnoreCase(title.trim());
+    }
 }
