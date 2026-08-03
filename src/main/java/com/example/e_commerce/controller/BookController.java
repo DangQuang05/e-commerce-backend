@@ -4,10 +4,11 @@ import com.example.e_commerce.dto.CreateBookRequest;
 import com.example.e_commerce.dto.UpdateBookRequest;
 import com.example.e_commerce.entity.Book;
 import com.example.e_commerce.service.BookService;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,8 +22,10 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAll() {
-        return ResponseEntity.ok(bookService.getAll());
+    public ResponseEntity<Page<Book>> getList(
+        @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+        @RequestParam(name = "title", required = false, defaultValue = "") String title) {
+        return ResponseEntity.ok(bookService.getList(page, title));
     }
 
     @GetMapping("/{id}")
@@ -43,10 +46,5 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Book> deactivate(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(bookService.deactivate(id));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Book>> search(@RequestParam(name = "title") String title) {
-        return ResponseEntity.ok(bookService.search(title));
     }
 }

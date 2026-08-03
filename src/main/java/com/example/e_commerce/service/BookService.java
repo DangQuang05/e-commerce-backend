@@ -5,10 +5,13 @@ import com.example.e_commerce.dto.UpdateBookRequest;
 import com.example.e_commerce.entity.Book;
 import com.example.e_commerce.entity.enums.BookStatus;
 import com.example.e_commerce.repository.BookRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,8 +22,9 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public Page<Book> getList(int page, String title) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return bookRepository.findByTitleContainingIgnoreCase(pageable, title.trim());
     }
 
     public Book getById(UUID id) {
@@ -63,9 +67,5 @@ public class BookService {
             return bookRepository.save(book);
         }
         return null;
-    }
-
-    public List<Book> search(String title) {
-        return bookRepository.findByTitleContainingIgnoreCase(title.trim());
     }
 }
