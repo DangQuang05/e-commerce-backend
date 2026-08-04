@@ -22,9 +22,14 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Page<Book> getList(int page, String title) {
+    public Page<Book> getList(int page, String title, BookStatus status) {
         Pageable pageable = PageRequest.of(page, 10);
-        return bookRepository.findByTitleContainingIgnoreCase(pageable, title.trim());
+        title = title.trim();
+        if (status == null) {
+            return bookRepository.findByTitleContainingIgnoreCase(pageable, title);
+        } else {
+            return bookRepository.findByTitleContainingIgnoreCaseAndStatus(pageable, title, status);
+        }
     }
 
     public Book getById(UUID id) {

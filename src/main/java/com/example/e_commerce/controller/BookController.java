@@ -3,6 +3,7 @@ package com.example.e_commerce.controller;
 import com.example.e_commerce.dto.CreateBookRequest;
 import com.example.e_commerce.dto.UpdateBookRequest;
 import com.example.e_commerce.entity.Book;
+import com.example.e_commerce.entity.enums.BookStatus;
 import com.example.e_commerce.service.BookService;
 
 import org.springframework.data.domain.Page;
@@ -24,8 +25,9 @@ public class BookController {
     @GetMapping
     public ResponseEntity<Page<Book>> getList(
         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-        @RequestParam(name = "title", required = false, defaultValue = "") String title) {
-        return ResponseEntity.ok(bookService.getList(page, title));
+        @RequestParam(name = "title", required = false, defaultValue = "") String title,
+        @RequestParam(name = "status", required = false) BookStatus status) {
+        return ResponseEntity.ok(bookService.getList(page, title, status));
     }
 
     @GetMapping("/{id}")
