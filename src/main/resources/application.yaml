@@ -1,6 +1,6 @@
 spring:
   application:
-    name: e-commerce
+    name: e-commerce-backend
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,3 +12,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/e_commerce
     username: postgres
     password: 123
+
+file:
+  upload-dir: C:\Users\trinh\OneDrive\Documents\Projects\E-commerce\images\

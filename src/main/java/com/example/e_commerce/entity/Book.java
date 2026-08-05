@@ -15,14 +15,17 @@ public class Book {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "title")
-    private String title;
-
     @Column(name = "isbn")
     private String isbn;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "cover_image_url")
+    private String coverImageUrl;
 
     @Column(name = "publication_date")
     private LocalDate publicationDate;
@@ -61,20 +64,38 @@ public class Book {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public UUID getId() {
-        return id;
+    public Book(String isbn, String title, String description, String coverImageUrl, LocalDate publicationDate, Integer pages, Double price, Integer stockQuantity) {
+        this.isbn = isbn;
+        this.title = title;
+        this.description = description;
+        this.coverImageUrl = coverImageUrl;
+        this.publicationDate = publicationDate;
+        this.pages = pages;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.status = BookStatus.ACTIVE;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public String getTitle() {
-        return title;
+    public UUID getId() {
+        return id;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
     public LocalDate getPublicationDate() {
@@ -105,16 +126,20 @@ public class Book {
         return updatedAt;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
     }
 
     public void setPublicationDate(LocalDate publicationDate) {
