@@ -39,10 +39,7 @@ public class BookService {
     public Book create(CreateBookRequest request) {
         return bookRepository.save(new Book(
                     request.getTitle(),
-                    request.getIsbn(),
                     request.getDescription(),
-                    request.getPublicationDate(),
-                    request.getPages(),
                     request.getPrice(),
                     request.getStockQuantity()
                 ));
@@ -52,10 +49,7 @@ public class BookService {
         Book book = getById(request.getId());
         if (book != null) {
             book.setTitle(request.getTitle());
-            book.setIsbn(request.getIsbn());
             book.setDescription(request.getDescription());
-            book.setPublicationDate(request.getPublicationDate());
-            book.setPages(request.getPages());
             book.setPrice(request.getPrice());
             book.setStockQuantity(request.getStockQuantity());
             book.setUpdatedAt(LocalDateTime.now());

@@ -3,8 +3,9 @@ package com.example.e_commerce.entity;
 import com.example.e_commerce.entity.enums.BookStatus;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,9 +16,6 @@ public class Book {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "isbn")
-    private String isbn;
-
     @Column(name = "title")
     private String title;
 
@@ -26,12 +24,6 @@ public class Book {
 
     @Column(name = "cover_image_url")
     private String coverImageUrl;
-
-    @Column(name = "publication_date")
-    private LocalDate publicationDate;
-
-    @Column(name = "pages")
-    private Integer pages;
 
     @Column(name = "price")
     private Double price;
@@ -48,15 +40,20 @@ public class Book {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+        name = "book_genre",
+        joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
+
     public Book() {
     }
 
-    public Book(String title, String isbn, String description, LocalDate publicationDate, Integer pages, Double price, Integer stockQuantity) {
+    public Book(String title, String description, Double price, Integer stockQuantity) {
         this.title = title;
-        this.isbn = isbn;
         this.description = description;
-        this.publicationDate = publicationDate;
-        this.pages = pages;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.status = BookStatus.ACTIVE;
@@ -64,26 +61,31 @@ public class Book {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Book(String isbn, String title, String description, String coverImageUrl, LocalDate publicationDate, Integer pages, Double price, Integer stockQuantity) {
-        this.isbn = isbn;
+    public Book(String title, String description, String coverImageUrl, Double price, Integer stockQuantity) {
         this.title = title;
         this.description = description;
         this.coverImageUrl = coverImageUrl;
-        this.publicationDate = publicationDate;
-        this.pages = pages;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.status = BookStatus.ACTIVE;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public Book(String title, String description, String coverImageUrl, Double price, Integer stockQuantity, Set<Genre> genres) {
+        this.title = title;
+        this.description = description;
+        this.coverImageUrl = coverImageUrl;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.status = BookStatus.ACTIVE;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.genres = genres;
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public String getIsbn() {
-        return isbn;
     }
 
     public String getTitle() {
@@ -96,14 +98,6 @@ public class Book {
 
     public String getCoverImageUrl() {
         return coverImageUrl;
-    }
-
-    public LocalDate getPublicationDate() {
-        return publicationDate;
-    }
-
-    public Integer getPages() {
-        return pages;
     }
 
     public Double getPrice() {
@@ -126,10 +120,6 @@ public class Book {
         return updatedAt;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -140,14 +130,6 @@ public class Book {
 
     public void setCoverImageUrl(String coverImageUrl) {
         this.coverImageUrl = coverImageUrl;
-    }
-
-    public void setPublicationDate(LocalDate publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public void setPages(Integer pages) {
-        this.pages = pages;
     }
 
     public void setPrice(Double price) {
