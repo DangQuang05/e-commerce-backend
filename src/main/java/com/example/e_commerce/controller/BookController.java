@@ -25,9 +25,13 @@ public class BookController {
     @GetMapping
     public ResponseEntity<Page<Book>> getList(
         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-        @RequestParam(name = "title", required = false, defaultValue = "") String title,
-        @RequestParam(name = "status", required = false) BookStatus status) {
-        return ResponseEntity.ok(bookService.getList(page, title, status));
+        @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+        @RequestParam(name = "title", required = false) String title,
+        @RequestParam(name = "status", required = false) BookStatus status,
+        @RequestParam(name = "minPrice", required = false) Double minPrice,
+        @RequestParam(name = "maxPrice", required = false) Double maxPrice
+    ) {
+        return ResponseEntity.ok(bookService.getList(page, size, title, status, minPrice, maxPrice));
     }
 
     @GetMapping("/{id}")

@@ -22,14 +22,19 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Page<Book> getList(int page, String title, BookStatus status) {
-        Pageable pageable = PageRequest.of(page, 10);
-        title = title.trim();
-        if (status == null) {
-            return bookRepository.findByTitleContainingIgnoreCase(pageable, title);
-        } else {
-            return bookRepository.findByTitleContainingIgnoreCaseAndStatus(pageable, title, status);
+    public Page<Book> getList(
+        int page,
+        int size,
+        String title,
+        BookStatus status,
+        Double minPrice,
+        Double maxPrice
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (title != null) {
+            title = title.trim();
         }
+        return bookRepository.filter(pageable, title, status, minPrice, maxPrice);
     }
 
     public Book getById(UUID id) {

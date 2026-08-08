@@ -13,7 +13,7 @@ import com.example.e_commerce.service.GenreService;
 
 @RestController
 @RequestMapping("api/genres")
-@CrossOrigin(origins = "http://locahost:5173/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class GenreController {
     private final GenreService genreService;
 
