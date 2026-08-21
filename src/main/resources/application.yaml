@@ -9,9 +9,11 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/e_commerce_db
-    username: e_commerce
-    password: e_commerce
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  config:
+    import: optional:file:.env[.properties]
 
 file:
-  upload-dir: /home/dang-quang/Documents/Projects/E-commerce/images/
+  upload-dir: ${FILE_UPLOAD_DIR}

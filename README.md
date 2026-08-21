@@ -1,6 +1,6 @@
 # E-commerce backend
 
-This project is for learning purpose.
+This project is for personal learning purpose.
 
 ## Tech Stack
 
